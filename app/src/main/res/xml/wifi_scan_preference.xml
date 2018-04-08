@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="pref_category_scan"
+        android:title="扫描">
+
+        <!--<ListPreference-->
+        <!--android:entries="@array/pref_scan_time_entries"-->
+        <!--android:defaultValue="@string/pref_scan_time_2"-->
+        <!--android:entryValues="@array/pref_scan_time_entries_values"-->
+        <!--android:key="pref_scan_time"-->
+        <!--android:title="@string/setting_scan_time">-->
+        <!--</ListPreference>-->
+
+        <!--<ListPreference-->
+        <!--android:entries="@array/pref_scan_interval_entries"-->
+        <!--android:defaultValue="@string/pref_scan_interval_0_5"-->
+        <!--android:entryValues="@array/pref_scan_interval_entries_values"-->
+        <!--android:key="pref_scan_interval"-->
+        <!--android:title="@string/setting_scan_interval">-->
+        <!--</ListPreference>-->
+
+        <ListPreference
+            android:defaultValue="10"
+            android:entries="@array/pref_scan_count_entries"
+            android:entryValues="@array/pref_scan_count_entries_values"
+            android:key="pref_scan_count"
+            android:title="@string/setting_scan_count" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

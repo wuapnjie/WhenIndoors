@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<string-array name="pref_scan_time_entries">-->
+    <!--<item>@string/pref_scan_time_2</item>-->
+    <!--<item>@string/pref_scan_time_5</item>-->
+    <!--</string-array>-->
+    <!--<string-array name="pref_scan_time_entries_values">-->
+    <!--<item>2</item>-->
+    <!--<item>5</item>-->
+    <!--</string-array>-->
+    <!--<array name="pref_scan_interval_entries">-->
+    <!--<item>@string/pref_scan_interval_0_2</item>-->
+    <!--<item>@string/pref_scan_interval_0_5</item>-->
+    <!--<item>@string/pref_scan_interval_1_0</item>-->
+    <!--</array>-->
+    <!--<string-array name="pref_scan_interval_entries_values">-->
+    <!--<item>0.2</item>-->
+    <!--<item>0.5</item>-->
+    <!--<item>1.0</item>-->
+    <!--</string-array>-->
+
+    <array name="pref_scan_count_entries">
+        <item>@string/pref_scan_count_10</item>
+        <item>@string/pref_scan_count_50</item>
+        <item>@string/pref_scan_count_100</item>
+        <item>@string/pref_scan_count_150</item>
+        <item>@string/pref_scan_count_200</item>
+    </array>
+    <string-array name="pref_scan_count_entries_values">
+        <item>10</item>
+        <item>50</item>
+        <item>100</item>
+        <item>150</item>
+        <item>200</item>
+    </string-array>
+</resources>

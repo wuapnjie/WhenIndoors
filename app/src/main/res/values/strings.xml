@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">WhenIndoors</string>
+    <string name="input_position">输入基准点坐标</string>
+    <string name="x_hint">x:</string>
+    <string name="y_hint">y:</string>
+    <string name="scan">扫描</string>
+    <string name="upload">上传</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_room">RoomActivity</string>
+    <string name="action_settings">设置</string>
+    <string name="room_list">房间列表</string>
+    <string name="title_activity_room_detail">RoomDetailActivity</string>
+    <string name="action_locate">开始定位</string>
+    <string name="action_clear">清空指纹</string>
+    <string name="action_done">完成</string>
+
+    <!--<string name="setting_scan_time">扫描时间</string>-->
+    <!--<string name="pref_scan_time_2">2分钟</string>-->
+    <!--<string name="pref_scan_time_5">5分钟</string>-->
+
+    <!--<string name="setting_scan_interval">扫描间隔</string>-->
+    <!--<string name="pref_scan_interval_0_2">0.2 S</string>-->
+    <!--<string name="pref_scan_interval_0_5">0.5 S</string>-->
+    <!--<string name="pref_scan_interval_1_0">1.0 S</string>-->
+
+    <string name="setting_scan_count">扫描次数</string>
+    <string name="pref_scan_count_10">10次</string>
+    <string name="pref_scan_count_50">50次</string>
+    <string name="pref_scan_count_100">100次</string>
+    <string name="pref_scan_count_150">150次</string>
+    <string name="pref_scan_count_200">200次</string>
+
+    <string name="settings">设置</string>
+    <string name="pick_position">选取房间位置</string>
+    <string name="template_position">(%f,%f)</string>
+
+</resources>

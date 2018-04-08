@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="IndoorsImageView">
+        <attr name="gridColor" format="color" />
+        <attr name="gridRow" format="integer"/>
+        <attr name="gridColumn" format="integer"/>
+    </declare-styleable>
+</resources>
