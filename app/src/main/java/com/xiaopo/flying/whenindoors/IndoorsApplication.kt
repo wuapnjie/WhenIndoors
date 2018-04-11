@@ -1,7 +1,6 @@
 package com.xiaopo.flying.whenindoors
 
 import android.app.Application
-import android.content.Context
 import com.qiniu.android.dns.AndroidContext
 import com.xiaopo.flying.whenindoors.di.AppComponent
 import com.xiaopo.flying.whenindoors.di.AppModule

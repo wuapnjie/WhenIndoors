@@ -13,8 +13,7 @@ import com.xiaopo.flying.whenindoors.RoomViewModel
 import com.xiaopo.flying.whenindoors.kits.AnotherAdapter
 import com.xiaopo.flying.whenindoors.kits.LinearDividerDecoration
 import com.xiaopo.flying.whenindoors.kits.toast
-import com.xiaopo.flying.whenindoors.model.Room
-import kotlinx.android.synthetic.main.activity_room.*
+import com.xiaopo.flying.whenindoors.model.RoomInfo
 import kotlinx.android.synthetic.main.fragment_room.*
 
 /**
@@ -65,7 +64,7 @@ class RoomFragment : Fragment() {
 
   private fun initUI() {
     room_list.layoutManager = LinearLayoutManager(context)
-    roomAdapter.with(Room::class.java, RoomItemViewBinder())
+    roomAdapter.with(RoomInfo::class.java, RoomItemViewBinder())
     room_list.adapter = roomAdapter
     room_list.addItemDecoration(LinearDividerDecoration(
         resources,

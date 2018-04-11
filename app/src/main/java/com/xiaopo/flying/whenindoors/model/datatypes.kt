@@ -8,68 +8,47 @@ import com.google.gson.annotations.SerializedName
  * @author wupanjie
  */
 
-data class WifiNetwork(val SSID: String,
-                       val BSSID: String,
-                       val RSSI: Int,
-                       val capabilities: String,
-                       val channel: Int,
-                       val frequency: String) : Parcelable{
+data class WiFiInfo(val SSID: String,
+                    val BSSID: String,
+                    val RSSI: Int) : Parcelable {
   constructor(parcel: Parcel) : this(
       parcel.readString(),
       parcel.readString(),
-      parcel.readInt(),
-      parcel.readString(),
-      parcel.readInt(),
-      parcel.readString()) {
+      parcel.readInt()) {
   }
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {
     parcel.writeString(SSID)
     parcel.writeString(BSSID)
     parcel.writeInt(RSSI)
-    parcel.writeString(capabilities)
-    parcel.writeInt(channel)
-    parcel.writeString(frequency)
   }
 
   override fun describeContents(): Int {
     return 0
   }
 
-  companion object CREATOR : Parcelable.Creator<WifiNetwork> {
-    override fun createFromParcel(parcel: Parcel): WifiNetwork {
-      return WifiNetwork(parcel)
+  companion object CREATOR : Parcelable.Creator<WiFiInfo> {
+    override fun createFromParcel(parcel: Parcel): WiFiInfo {
+      return WiFiInfo(parcel)
     }
 
-    override fun newArray(size: Int): Array<WifiNetwork?> {
+    override fun newArray(size: Int): Array<WiFiInfo?> {
       return arrayOfNulls(size)
     }
   }
 
 }
 
-data class RoomPosition(val x: Double, val y: Double, val wifi_stats: List<WifiNetwork>? = null) : Parcelable{
-
-  val macRSSIMap: HashMap<String, Int>
-    get() {
-      val map = hashMapOf<String, Int>()
-      wifi_stats?.forEach {
-        map.put(it.BSSID, it.RSSI)
-      }
-
-      return map
-    }
+data class RoomPosition(val x: Double, val y: Double) : Parcelable {
 
   constructor(parcel: Parcel) : this(
       parcel.readDouble(),
-      parcel.readDouble(),
-      parcel.createTypedArrayList(WifiNetwork)) {
+      parcel.readDouble()) {
   }
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {
     parcel.writeDouble(x)
     parcel.writeDouble(y)
-    parcel.writeTypedList(wifi_stats)
   }
 
   override fun describeContents(): Int {
@@ -94,8 +73,8 @@ data class Room(
     @SerializedName("room_name") val name: String,
     var positions: List<RoomPosition> = arrayListOf(),
     @SerializedName("image_url") val imageUrl: String = "",
-    val width : Double,
-    val height : Double) : Parcelable{
+    val width: Double,
+    val height: Double) : Parcelable {
   constructor(parcel: Parcel) : this(
       parcel.readString(),
       parcel.readString(),
@@ -130,8 +109,17 @@ data class Room(
 
 }
 
+data class RoomInfo(
+    @SerializedName("_id") val id: String,
+    @SerializedName("room_name") val name: String,
+    @SerializedName("image_url") val imageUrl: String = "",
+    val width: Double,
+    val height: Double,
+    val positions_count: Int)
+
+
 data class RoomsData(
-    val rooms: List<Room>
+    val rooms: List<RoomInfo>
 )
 
 data class RoomData(
@@ -139,5 +127,9 @@ data class RoomData(
 )
 
 data class TokenData(
-    val token : String
+    val token: String
+)
+
+data class NeedComputePosition(
+    val fingerprint: List<WiFiInfo>
 )

@@ -1,10 +1,7 @@
 package com.xiaopo.flying.whenindoors.data.remote
 
 import com.xiaopo.flying.whenindoors.data.IndoorsDataSource
-import com.xiaopo.flying.whenindoors.model.ResponseTemplate
-import com.xiaopo.flying.whenindoors.model.Room
-import com.xiaopo.flying.whenindoors.model.RoomsData
-import com.xiaopo.flying.whenindoors.model.WifiData
+import com.xiaopo.flying.whenindoors.model.*
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -40,4 +37,8 @@ class RemoteDataSource @Inject constructor(private val indoorsAPI: IndoorsAPI) :
         .map { resp -> resp.data.room }
   }
 
+  override fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition): Observable<RoomPosition> {
+    return indoorsAPI.fetchLocation(roomId, needComputePosition)
+        .map { resp -> resp.data }
+  }
 }

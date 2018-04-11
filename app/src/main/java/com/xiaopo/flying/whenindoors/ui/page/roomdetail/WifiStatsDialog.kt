@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import com.xiaopo.flying.whenindoors.R
 import com.xiaopo.flying.whenindoors.kits.AnotherAdapter
 import com.xiaopo.flying.whenindoors.kits.LinearDividerDecoration
-import com.xiaopo.flying.whenindoors.model.WifiNetwork
+import com.xiaopo.flying.whenindoors.model.WiFiInfo
 import kotlinx.android.synthetic.main.dialog_wifi_stats.view.*
 
 /**
  * @author wupanjie
  */
-class WifiStatsDialog(val context: Context, wifiStats: List<WifiNetwork>) {
+class WifiStatsDialog(val context: Context, wifiStats: List<WiFiInfo>) {
   val dialog = BottomSheetDialog(context)
 
   init {
@@ -21,7 +21,7 @@ class WifiStatsDialog(val context: Context, wifiStats: List<WifiNetwork>) {
 
     val wifiList = view.wifi_list
     wifiList.layoutManager = LinearLayoutManager(context)
-    val adapter = AnotherAdapter().with(WifiNetwork::class.java, WifiNetworkItemViewBinder())
+    val adapter = AnotherAdapter().with(WiFiInfo::class.java, WifiNetworkItemViewBinder())
     wifiList.adapter = adapter
     adapter.update(wifiStats)
     wifiList.addItemDecoration(LinearDividerDecoration(

@@ -15,7 +15,7 @@ class AnotherAdapter : Adapter<ViewHolder>() {
   private val types = arrayListOf<Class<*>>()
   private val binders = arrayListOf<ItemBinder<*, *>>()
 
-  fun with(clazz: Class<*>, binder: ItemBinder<*, *>): AnotherAdapter {
+  fun <T : Any> with(clazz: Class<T>, binder: ItemBinder<T, *>): AnotherAdapter {
     if (types.contains(clazz)) {
       val index = types.indexOf(clazz)
       types.removeAt(index)

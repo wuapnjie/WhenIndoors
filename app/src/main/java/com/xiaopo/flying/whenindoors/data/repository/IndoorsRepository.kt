@@ -7,10 +7,7 @@ import android.net.Uri
 import com.xiaopo.flying.whenindoors.data.remote.ImageUploader
 import com.xiaopo.flying.whenindoors.data.remote.RemoteDataSource
 import com.xiaopo.flying.whenindoors.kits.Result
-import com.xiaopo.flying.whenindoors.model.ResponseTemplate
-import com.xiaopo.flying.whenindoors.model.Room
-import com.xiaopo.flying.whenindoors.model.RoomsData
-import com.xiaopo.flying.whenindoors.model.WifiData
+import com.xiaopo.flying.whenindoors.model.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -103,6 +100,21 @@ class IndoorsRepository @Inject constructor(
   override fun createRoom(room: Room): LiveData<Result<Room, Throwable>> {
     val mutableLiveData = MutableLiveData<Result<Room, Throwable>>()
     val disposable = remoteDataSource.createRoom(room)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe({
+          mutableLiveData.value = Result.of(it)
+        }, {
+          mutableLiveData.value = Result.error(it)
+        })
+
+    allDisposables.add(disposable)
+
+    return mutableLiveData
+  }
+
+  override fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition): LiveData<Result<RoomPosition, Throwable>> {
+    val mutableLiveData = MutableLiveData<Result<RoomPosition, Throwable>>()
+    val disposable = remoteDataSource.fetchLocation(roomId, needComputePosition)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
           mutableLiveData.value = Result.of(it)

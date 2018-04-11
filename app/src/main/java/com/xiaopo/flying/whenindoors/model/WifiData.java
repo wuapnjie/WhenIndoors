@@ -1,7 +1,6 @@
 package com.xiaopo.flying.whenindoors.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.xiaopo.flying.awifi.WiFiNetwork;
 
 import java.util.List;
 
@@ -13,9 +12,9 @@ public class WifiData {
   private double x;
   private double y;
   @SerializedName("wifi_stats")
-  private List<WiFiNetwork> wiFiNetworks;
+  private List<WiFiInfo> wiFiNetworks;
 
-  public WifiData(double x, double y , List<WiFiNetwork> networks) {
+  public WifiData(double x, double y, List<WiFiInfo> networks) {
     this.x = x;
     this.y = y;
     this.wiFiNetworks = networks;
@@ -37,11 +36,11 @@ public class WifiData {
     this.y = y;
   }
 
-  public List<WiFiNetwork> getWiFiNetworks() {
+  public List<WiFiInfo> getWiFiNetworks() {
     return wiFiNetworks;
   }
 
-  public void setWiFiNetworks(List<WiFiNetwork> wiFiNetworks) {
+  public void setWiFiNetworks(List<WiFiInfo> wiFiNetworks) {
     this.wiFiNetworks = wiFiNetworks;
   }
 }

@@ -28,7 +28,7 @@ object ImageUploader {
     return Observable.create { emitter ->
       remoteDataSource.fetchUploadToken()
           .subscribe { token ->
-            emitter.onNext(uploadManager.syncPut(data,null,token,null))
+            emitter.onNext(uploadManager.syncPut(data, null, token, null))
             emitter.onComplete()
           }
     }

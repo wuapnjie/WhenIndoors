@@ -19,7 +19,7 @@ class FingerprintItemViewBinder : AnotherBinder<RoomPosition>() {
   }
 
   override fun renderView(holder: AnotherViewHolder, itemView: View, item: RoomPosition) {
-    itemView.tv_position.text = "指纹坐标:(${item.x},${item.y})"
+    itemView.tv_position.text = "指纹坐标: \n(${item.x.toFloat()},${item.y.toFloat()})"
 //    itemView.tv_wifi_stat_count.text = "${item.wifi_stats?.size ?: 0}个WiFi信息"
 //    itemView.setOnClickListener {
 //      WifiStatsDialog(it.context, item.wifi_stats)

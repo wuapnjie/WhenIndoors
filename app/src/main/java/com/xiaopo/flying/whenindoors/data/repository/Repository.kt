@@ -3,10 +3,7 @@ package com.xiaopo.flying.whenindoors.data.repository
 import android.arch.lifecycle.LiveData
 import android.net.Uri
 import com.xiaopo.flying.whenindoors.kits.Result
-import com.xiaopo.flying.whenindoors.model.ResponseTemplate
-import com.xiaopo.flying.whenindoors.model.Room
-import com.xiaopo.flying.whenindoors.model.RoomsData
-import com.xiaopo.flying.whenindoors.model.WifiData
+import com.xiaopo.flying.whenindoors.model.*
 
 /**
  * @author wupanjie
@@ -23,5 +20,7 @@ interface Repository {
 
   fun uploadImage(uri: Uri): LiveData<Result<String, Throwable>>
 
-  fun createRoom(room: Room): LiveData<Result<Room , Throwable>>
+  fun createRoom(room: Room): LiveData<Result<Room, Throwable>>
+
+  fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition): LiveData<Result<RoomPosition, Throwable>>
 }

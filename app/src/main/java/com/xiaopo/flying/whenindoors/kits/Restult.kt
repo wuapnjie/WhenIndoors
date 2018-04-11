@@ -47,7 +47,7 @@ fun <V : Any> Result<V, *>.any(predicate: (V) -> Boolean): Boolean = when (this)
   is Result.Failure -> false
 }
 
-fun <V : Any, U: Any> Result<V, *>.fanout(other: () -> Result<U, *>): Result<Pair<V, U>, *> =
+fun <V : Any, U : Any> Result<V, *>.fanout(other: () -> Result<U, *>): Result<Pair<V, U>, *> =
     flatMap { outer -> other().map { outer to it } }
 
 sealed class Result<out V : Any, out E : Throwable> {
@@ -108,7 +108,7 @@ sealed class Result<out V : Any, out E : Throwable> {
 
     fun <V : Any> of(f: () -> V): Result<V, Throwable> = try {
       Success(f())
-    } catch(ex: Throwable) {
+    } catch (ex: Throwable) {
       Failure(ex)
     }
   }

@@ -3,6 +3,7 @@ package com.xiaopo.flying.whenindoors
 import android.arch.lifecycle.ViewModel
 import android.net.Uri
 import com.xiaopo.flying.whenindoors.data.repository.IndoorsRepository
+import com.xiaopo.flying.whenindoors.model.NeedComputePosition
 import com.xiaopo.flying.whenindoors.model.Room
 import com.xiaopo.flying.whenindoors.model.WifiData
 import javax.inject.Inject
@@ -12,7 +13,8 @@ import javax.inject.Inject
  */
 class RoomViewModel : ViewModel() {
 
-  @Inject lateinit var repository: IndoorsRepository
+  @Inject
+  lateinit var repository: IndoorsRepository
 
   init {
     initializeDagger()
@@ -24,7 +26,7 @@ class RoomViewModel : ViewModel() {
 
   fun loadRoomList(limit: Int = 10, offset: Int = 0) = repository.getRoomList(limit, offset)
 
-  fun loadRoomInfo(roomId : String) = repository.getRoomInfo(roomId)
+  fun loadRoomInfo(roomId: String) = repository.getRoomInfo(roomId)
 
   fun clearFingerprints(roomId: String) = repository.clearFingerprints(roomId)
 
@@ -33,4 +35,6 @@ class RoomViewModel : ViewModel() {
   fun uploadImage(uri: Uri) = repository.uploadImage(uri)
 
   fun createRoom(room: Room) = repository.createRoom(room)
+
+  fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition) = repository.fetchLocation(roomId, needComputePosition)
 }

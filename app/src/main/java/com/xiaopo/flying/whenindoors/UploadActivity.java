@@ -23,16 +23,15 @@ import com.xiaopo.flying.awifi.AWifi;
 import com.xiaopo.flying.awifi.WiFiNetwork;
 import com.xiaopo.flying.whenindoors.model.Room;
 import com.xiaopo.flying.whenindoors.model.RoomPosition;
+import com.xiaopo.flying.whenindoors.model.WiFiInfo;
 import com.xiaopo.flying.whenindoors.model.WifiData;
-import com.xiaopo.flying.whenindoors.model.WifiNetwork;
-import com.xiaopo.flying.whenindoors.ui.page.locate.LocateActivity;
+import com.xiaopo.flying.whenindoors.ui.page.locate.SelectLocateActivity;
 import com.xiaopo.flying.whenindoors.ui.page.setting.SettingActivity;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionNo;
 import com.yanzhenjie.permission.PermissionYes;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
@@ -49,9 +48,8 @@ public class UploadActivity extends AppCompatActivity {
   private TextView tvPickedPosition;
   private Toolbar toolbar;
 
-  private final ArrayList<WiFiNetwork> wiFiNetworks = new ArrayList<>();
+  private final ArrayList<WiFiInfo> wifiInfos = new ArrayList<>();
   private ArrayList<String> bssidFilters;
-  private final HashMap<String, ArrayList<WiFiNetwork>> scanNetworkMap = new HashMap<>();
   private RecyclerView wifiList;
   private MultiTypeAdapter adapter;
 
@@ -103,76 +101,37 @@ public class UploadActivity extends AppCompatActivity {
   private void startScanning() {
     waitForScan.show();
 
-    wiFiNetworks.clear();
-    adapter.setItems(wiFiNetworks);
+    wifiInfos.clear();
+    adapter.setItems(wifiInfos);
     adapter.notifyDataSetChanged();
 
-    scanNetworkMap.clear();
-
-    for (String bssidFilter : bssidFilters) {
-      scanNetworkMap.put(bssidFilter, new ArrayList<>());
-    }
 
     String scanCount = sharedPreferences.getString("pref_scan_count", "10");
     int count = 1;
 
+    disposable = AWifi.from(getApplicationContext())
+        .subscribe(scanResults -> {
+
+        });
+
     disposable = AWifi.from(getApplicationContext(), count)
         .subscribe(scanResults -> {
+              wifiInfos.clear();
               for (ScanResult scanResult : scanResults) {
                 WiFiNetwork wiFiNetwork = WiFiNetwork.from(scanResult);
-                ArrayList<WiFiNetwork> networks = scanNetworkMap.get(wiFiNetwork.getBSSID());
-                if (networks != null) {
-                  networks.add(wiFiNetwork);
+                if (bssidFilters.contains(wiFiNetwork.getBSSID())) {
+                  wifiInfos.add(new WiFiInfo(wiFiNetwork.getSSID(), wiFiNetwork.getBSSID(), wiFiNetwork.getRssi()));
                 }
               }
-            },
-            throwable -> Log.e("RX-WIFI-SingleScan", throwable.getMessage())
-            , () -> {
-              wiFiNetworks.clear();
-              adapter.setItems(wiFiNetworks);
-              adapter.notifyDataSetChanged();
-
-              List<WifiNetwork> result = new ArrayList<>();
-
-              // 一些处理
-              for (String bssid : scanNetworkMap.keySet()) {
-                Log.d(TAG, "bssid : " + bssid + ", wifi count : " + scanNetworkMap.get(bssid).size());
-
-                ArrayList<WiFiNetwork> networks = scanNetworkMap.get(bssid);
-                if (networks.isEmpty()) return;
-                int totalRSSI = 0;
-                for (WiFiNetwork wiFiNetwork : networks) {
-                  totalRSSI += wiFiNetwork.getRssi();
-                }
-
-                WiFiNetwork origin = networks.get(0);
-                WiFiNetwork wiFiNetwork =
-                    new WiFiNetwork(
-                        origin.getSSID(),
-                        origin.getBSSID(),
-                        origin.getCapabilities(),
-                        origin.getChannel(),
-                        totalRSSI / networks.size(),
-                        origin.getFrequency());
-
-                wiFiNetworks.add(wiFiNetwork);
-
-                result.add(new WifiNetwork(wiFiNetwork.getSSID(),
-                    wiFiNetwork.getBSSID(),
-                    wiFiNetwork.getRssi(),
-                    wiFiNetwork.getCapabilities(),
-                    wiFiNetwork.getChannel(),
-                    wiFiNetwork.getFrequency().toString()));
-              }
-
               waitForScan.dismiss();
 
-              room.getPositions().add(new RoomPosition(pickedX,pickedY,result));
+              room.getPositions().add(new RoomPosition(pickedX, pickedY));
 
-              adapter.setItems(wiFiNetworks);
+              adapter.setItems(wifiInfos);
               adapter.notifyDataSetChanged();
-
-            });
+            },
+            throwable -> Log.e("RX-WIFI-SingleScan", throwable.getMessage())
+        );
 
   }
 
@@ -186,7 +145,7 @@ public class UploadActivity extends AppCompatActivity {
 
     wifiList.setLayoutManager(new LinearLayoutManager(this));
     adapter = new MultiTypeAdapter();
-    adapter.register(WiFiNetwork.class, new WifiNetworkViewBinder());
+    adapter.register(WiFiInfo.class, new WifiNetworkViewBinder());
     wifiList.setAdapter(adapter);
     toolbar.inflateMenu(R.menu.menu_upload);
     toolbar.setOnMenuItemClickListener(item -> {
@@ -226,13 +185,13 @@ public class UploadActivity extends AppCompatActivity {
   }
 
   private void pickUploadPosition() {
-    Intent intent = new Intent(this, LocateActivity.class);
+    Intent intent = new Intent(this, SelectLocateActivity.class);
     intent.putExtra("room", room);
     startActivityForResult(intent, REQUEST_PICK_POSITION);
   }
 
   private void uploadWifiData() {
-    if (wiFiNetworks.isEmpty()) {
+    if (wifiInfos.isEmpty()) {
       Toast.makeText(this, "请扫描Wifi", Toast.LENGTH_SHORT).show();
       return;
     }
@@ -244,7 +203,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
 
-    WifiData wifiData = new WifiData(pickedX, pickedY, new ArrayList<>(wiFiNetworks));
+    WifiData wifiData = new WifiData(pickedX, pickedY, new ArrayList<>(wifiInfos));
 
     viewModel.uploadWifi(room.getId(), wifiData)
         .observe(this, result -> {

@@ -16,7 +16,9 @@ interface IndoorsDataSource {
 
   fun uploadWifi(roomId: String, wifiData: WifiData): Observable<ResponseTemplate>
 
-  fun fetchUploadToken() : Observable<String>
+  fun fetchUploadToken(): Observable<String>
 
   fun createRoom(room: Room): Observable<Room>
+
+  fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition): Observable<RoomPosition>
 }

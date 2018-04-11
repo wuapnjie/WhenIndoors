@@ -15,10 +15,12 @@ import kotlin.math.abs
  */
 
 internal typealias OnNotTouchedListener = (touchedX: Float, touchedY: Float) -> Unit
+
 internal typealias OnSingleTapListener = (tapX: Float, tapY: Float) -> Unit
 internal typealias OnDoubleTabListener = (tapX: Float, tapY: Float) -> Unit
 internal typealias OnZoomAndRotateListener =
-(midPointX: Float, midPointY: Float, deltaZoom: Float, deltaAngle: Float, deltaMidPointX: Float, deltaMidPointY: Float) -> Unit
+    (midPointX: Float, midPointY: Float, deltaZoom: Float, deltaAngle: Float, deltaMidPointX: Float, deltaMidPointY: Float) -> Unit
+
 internal typealias OnDragListener = (dx: Float, dy: Float) -> Unit
 internal typealias OnLongPressListener = (pressX: Float, pressY: Float) -> Unit
 internal typealias OnReleaseListener = (releaseX: Float, releaseY: Float, gesture: GestureType) -> Unit
@@ -158,7 +160,7 @@ class GestureKiller(val context: Context) {
         if (gesture == GestureType.DRAG ||
             gesture == GestureType.LONG_PRESS ||
             gesture == GestureType.ZOOM_ROTATE
-            ) {
+        ) {
           onReleaseListener?.invoke(event.x, event.y, gesture)
         }
         gesture = GestureType.NONE

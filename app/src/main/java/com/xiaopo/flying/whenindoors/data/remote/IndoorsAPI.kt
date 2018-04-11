@@ -41,4 +41,10 @@ interface IndoorsAPI {
   fun createRoom(
       @Body room: Room
   ): Observable<DataResponseTemplate<RoomData>>
+
+  @POST("room/location")
+  fun fetchLocation(
+      @Query(QUERY_ROOM_ID) roomId: String,
+      @Body needComputePosition: NeedComputePosition
+  ): Observable<DataResponseTemplate<RoomPosition>>
 }

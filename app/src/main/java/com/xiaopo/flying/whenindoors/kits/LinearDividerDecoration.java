@@ -47,7 +47,7 @@ public class LinearDividerDecoration extends RecyclerView.ItemDecoration {
       left = parent.getPaddingLeft();
       right = parent.getWidth() - parent.getPaddingRight();
       final int childCount = parent.getChildCount();
-      for (int i = 0; i < childCount ; i++) {
+      for (int i = 0; i < childCount; i++) {
         final View child = parent.getChildAt(i);
         final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
         top = child.getBottom() + params.bottomMargin;

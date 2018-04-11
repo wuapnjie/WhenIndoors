@@ -86,8 +86,9 @@ class AddRoomActivity : AppCompatActivity() {
         .observe(this, Observer { result ->
           result?.fold(success = { room ->
             logd(room.toString())
+            finish()
           }, failure = {
-            logd(it.message!!)
+            logd(it.message)
             toast(it.message)
           })
         })

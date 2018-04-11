@@ -15,6 +15,7 @@ import com.xiaopo.flying.whenindoors.model.RoomPosition
  * @author wupanjie
  */
 internal typealias OnPickPositionListener = (pickedRoomX: Double, pickedRoomY: Double) -> Unit
+
 internal typealias OnFingerprintTapListener = (roomPosition: RoomPosition, roomX: Double, roomY: Double) -> Unit
 
 class IndoorsImageView @JvmOverloads constructor(context: Context,
@@ -55,7 +56,9 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
     markPositions.forEach {
       val mark = Mark(it, dWidth.toDouble() / roomWidth * it.x, dHeight.toDouble() / roomHeight * it.y)
       val markLength = markDrawable?.intrinsicWidth ?: 0
-      mark.bounds.set((mark.x - markLength / 2).toInt(), (mark.y - markLength / 2).toInt(), (mark.x + markLength / 2).toInt(), (mark.y + markLength / 2).toInt())
+      mark.bounds
+          .set((mark.x - markLength / 2).toInt(), (mark.y - markLength / 2).toInt(), (mark.x + markLength / 2).toInt(), (mark.y + markLength / 2).toInt())
+//      mark.bounds.offset(-markLength / 2, -markLength / 2)
       marks.add(mark)
     }
   }

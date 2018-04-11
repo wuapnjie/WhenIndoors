@@ -41,6 +41,9 @@
         <activity
             android:name=".ui.page.locate.LocateActivity"
             android:theme="@style/AppTheme.FullScreen" />
+        <activity
+            android:name=".ui.page.locate.SelectLocateActivity"
+            android:theme="@style/AppTheme.FullScreen" />
         <activity android:name=".ui.page.addroom.AddRoomActivity"></activity>
     </application>
 

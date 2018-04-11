@@ -7,14 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.xiaopo.flying.awifi.WiFiNetwork;
+import com.xiaopo.flying.whenindoors.model.WiFiInfo;
 
 import me.drakeet.multitype.ItemViewBinder;
 
 /**
  * @author wupanjie
  */
-public class WifiNetworkViewBinder extends ItemViewBinder<WiFiNetwork, WifiNetworkViewBinder.ViewHolder> {
+public class WifiNetworkViewBinder extends ItemViewBinder<WiFiInfo, WifiNetworkViewBinder.ViewHolder> {
 
   @NonNull
   @Override
@@ -24,10 +24,10 @@ public class WifiNetworkViewBinder extends ItemViewBinder<WiFiNetwork, WifiNetwo
   }
 
   @Override
-  protected void onBindViewHolder(@NonNull final ViewHolder holder, @NonNull final WiFiNetwork wifi) {
+  protected void onBindViewHolder(@NonNull final ViewHolder holder, @NonNull final WiFiInfo wifi) {
     holder.tvSsid.setText(wifi.getSSID());
     holder.tvBssid.setText(wifi.getBSSID());
-    holder.tvRssi.setText(wifi.getRssi() + " dB");
+    holder.tvRssi.setText(wifi.getRSSI() + " dB");
   }
 
   static class ViewHolder extends RecyclerView.ViewHolder {
