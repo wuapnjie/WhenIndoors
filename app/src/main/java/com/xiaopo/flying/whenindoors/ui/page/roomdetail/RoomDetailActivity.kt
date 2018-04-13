@@ -132,7 +132,7 @@ class RoomDetailActivity : AppCompatActivity() {
             room_image.setOnClickListener { toLocatePosition() }
 
             fingerprints.clear()
-            room.positions?.let {
+            room.positions.let {
               fingerprints.addAll(it)
             }
             adapter.update(fingerprints)

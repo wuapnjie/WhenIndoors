@@ -125,7 +125,6 @@ public class UploadActivity extends AppCompatActivity {
               }
               waitForScan.dismiss();
 
-              room.getPositions().add(new RoomPosition(pickedX, pickedY));
 
               adapter.setItems(wifiInfos);
               adapter.notifyDataSetChanged();
@@ -211,6 +210,7 @@ public class UploadActivity extends AppCompatActivity {
             result.fold(
                 responseTemplate -> {
                   if (responseTemplate.getStatus() == 0) {
+                    room.getPositions().add(new RoomPosition(pickedX, pickedY));
                     Toast.makeText(UploadActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
                   } else {
                     Toast.makeText(UploadActivity.this, "上传失败", Toast.LENGTH_SHORT).show();

@@ -61,7 +61,7 @@ class SelectLocateActivity : AppCompatActivity() {
 
   private fun placeWifiFingerprintMarks() {
     indoors_image.markDrawable = resources.getDrawable(R.drawable.ic_wifi_mark_24dp);
-    room.positions?.let {
+    room.positions.let {
       indoors_image.markPositions = ArrayList(it)
     }
     indoors_image.roomWidth = room.width
