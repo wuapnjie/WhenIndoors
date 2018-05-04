@@ -33,5 +33,7 @@
     <string name="settings">设置</string>
     <string name="pick_position">选取房间位置</string>
     <string name="template_position">(%f,%f)</string>
+    <string name="locate">定位</string>
+    <string name="action_detail">DETAIL</string>
 
 </resources>

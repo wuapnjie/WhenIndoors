@@ -22,7 +22,6 @@
         <activity android:name=".SelectActivity" />
         <activity
             android:name=".ui.page.room.RoomActivity"
-            android:label="@string/title_activity_room"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +39,7 @@
             android:theme="@style/AppTheme.ActionBar" />
         <activity
             android:name=".ui.page.locate.LocateActivity"
-            android:theme="@style/AppTheme.FullScreen" />
+            />
         <activity
             android:name=".ui.page.locate.SelectLocateActivity"
             android:theme="@style/AppTheme.FullScreen" />

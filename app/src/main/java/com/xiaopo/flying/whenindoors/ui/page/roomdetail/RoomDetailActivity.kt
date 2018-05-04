@@ -53,7 +53,6 @@ class RoomDetailActivity : AppCompatActivity() {
     toolbar.inflateMenu(R.menu.menu_room_detail)
     toolbar.setOnMenuItemClickListener {
       when (it.itemId) {
-        R.id.action_locate -> toLocatePosition()
         R.id.action_clear -> clearFingerprint()
       }
 

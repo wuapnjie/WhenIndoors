@@ -19,7 +19,7 @@ class SelectLocateActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_locate)
+    setContentView(R.layout.activity_select_locate)
 
     room = intent.getParcelableExtra("room")
     toast("(${room.width},${room.height})")
@@ -60,7 +60,7 @@ class SelectLocateActivity : AppCompatActivity() {
   }
 
   private fun placeWifiFingerprintMarks() {
-    indoors_image.markDrawable = resources.getDrawable(R.drawable.ic_wifi_mark_24dp);
+    indoors_image.markDrawable = resources.getDrawable(R.drawable.ic_wifi_mark_18dp);
     room.positions.let {
       indoors_image.markPositions = ArrayList(it)
     }

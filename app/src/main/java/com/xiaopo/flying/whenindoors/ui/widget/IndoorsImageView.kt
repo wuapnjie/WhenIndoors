@@ -36,10 +36,16 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
   private var dHeight = 0
 
   private val grid = Grid()
-  var needDrawGrid = true
+  var needDrawGrid = false
     set(value) {
       field = value
-      invalidate()
+      postInvalidate()
+    }
+
+  var needDrawMark = false
+    set(value) {
+      field = value
+      postInvalidate()
     }
 
   private val marks = arrayListOf<Mark>()
@@ -48,7 +54,26 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
       field.clear()
       field.addAll(value)
       convertMarkPositions()
-      invalidate()
+      postInvalidate()
+    }
+
+  var needDrawCurrentMark = false
+    set(value) {
+      field = value
+      postInvalidate()
+    }
+
+  private var currentMark: Mark? = null
+  var currentPosition: RoomPosition? = null
+    set(value) {
+      value?.let {
+        val markLength = markDrawable?.intrinsicWidth ?: 0
+        currentMark = Mark(it, dWidth.toDouble() / roomWidth * it.x, dHeight.toDouble() / roomHeight * it.y).apply {
+          bounds.set((x - markLength / 2).toInt(), (y - markLength / 2).toInt(), (x + markLength / 2).toInt(), (y + markLength / 2).toInt())
+        }
+
+        postInvalidate()
+      }
     }
 
   private fun convertMarkPositions() {
@@ -67,39 +92,45 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
   var markDrawable: Drawable? = null
     set(value) {
       field = value
-      invalidate()
+      postInvalidate()
+    }
+
+  var currentMarkDrawable: Drawable? = null
+    set(value) {
+      field = value
+      postInvalidate()
     }
 
   var gridColor = Color.BLACK
     set(value) {
       field = value
-      invalidate()
+      postInvalidate()
     }
 
   var gridRow = 10
     set(value) {
       field = value
       grid.row = value
-      invalidate()
+      postInvalidate()
     }
 
   var gridColumn = 10
     set(value) {
       field = value
       grid.column = value
-      invalidate()
+      postInvalidate()
     }
 
   var roomWidth = 0.0
     set(value) {
       field = value
-      invalidate()
+      postInvalidate()
     }
 
   var roomHeight = 0.0
     set(value) {
       field = value
-      invalidate()
+      postInvalidate()
     }
 
   var onPickPositionListener: OnPickPositionListener? = null
@@ -184,12 +215,12 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
       val vwidth = width - paddingLeft - paddingRight
       val vheight = height - paddingTop - paddingBottom
 
-      if (dWidth <= vwidth && dHeight <= vheight) {
-        scale = 1.0f
-      } else {
-        scale = Math.min(vwidth.toFloat() / dWidth.toFloat(),
-            vheight.toFloat() / dHeight.toFloat())
-      }
+//      if (dWidth <= vwidth && dHeight <= vheight) {
+//        scale = 1.0f
+//      } else {
+      scale = Math.min(vwidth.toFloat() / dWidth.toFloat(),
+          vheight.toFloat() / dHeight.toFloat())
+//      }
 
       dx = Math.round((vwidth - dWidth * scale) * 0.5f).toFloat()
       dy = Math.round((vheight - dHeight * scale) * 0.5f).toFloat()
@@ -215,6 +246,7 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
     drawable?.let {
       dWidth = it.intrinsicWidth
       dHeight = it.intrinsicHeight
+      drawableBounds.set(0f, 0f, it.intrinsicWidth.toFloat(), it.intrinsicHeight.toFloat())
       initDrawable()
     }
     super.setImageDrawable(drawable)
@@ -250,12 +282,18 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
     if (needDrawGrid) {
       val count = canvas.save()
       canvas.concat(controlMatrix)
-      grid.draw(canvas)
       grid.bounds.set(drawableBounds)
+      grid.draw(canvas)
       canvas.restoreToCount(count)
     }
 
-    drawMarks(canvas)
+    if (needDrawMark) {
+      drawMarks(canvas)
+    }
+
+    if (needDrawCurrentMark) {
+      drawCurrentMark(canvas)
+    }
   }
 
   private fun drawMarks(canvas: Canvas) {
@@ -264,6 +302,16 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
       canvas.concat(controlMatrix)
       markDrawable?.bounds = it.bounds
       markDrawable?.draw(canvas)
+      canvas.restoreToCount(count)
+    }
+  }
+
+  private fun drawCurrentMark(canvas: Canvas) {
+    currentMark?.let {
+      val count = canvas.save()
+      canvas.concat(controlMatrix)
+      currentMarkDrawable?.bounds = it.bounds
+      currentMarkDrawable?.draw(canvas)
       canvas.restoreToCount(count)
     }
   }
