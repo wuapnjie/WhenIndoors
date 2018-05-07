@@ -37,8 +37,8 @@ class RemoteDataSource @Inject constructor(private val indoorsAPI: IndoorsAPI) :
         .map { resp -> resp.data.room }
   }
 
-  override fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition): Observable<RoomPosition> {
-    return indoorsAPI.fetchLocation(roomId, needComputePosition)
+  override fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition,k:Int): Observable<RoomPosition> {
+    return indoorsAPI.fetchLocation(roomId, needComputePosition,k)
         .map { resp -> resp.data }
   }
 }

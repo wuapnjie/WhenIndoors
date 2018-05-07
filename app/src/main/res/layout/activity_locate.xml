@@ -65,4 +65,15 @@
         android:padding="8dp"
         tools:text="Debug" />
 
+    <com.xiaopo.flying.whenindoors.ui.widget.TwoWaySeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:paddingLeft="56dp"
+        android:paddingRight="56dp"
+        app:initialValue="6"
+        app:maxValue="12"
+        app:minValue="0" />
+
 </FrameLayout>

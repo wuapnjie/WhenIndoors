@@ -36,5 +36,5 @@ class RoomViewModel : ViewModel() {
 
   fun createRoom(room: Room) = repository.createRoom(room)
 
-  fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition) = repository.fetchLocation(roomId, needComputePosition)
+  fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition, k: Int = 4) = repository.fetchLocation(roomId, needComputePosition, k)
 }

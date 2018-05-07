@@ -7,8 +7,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:name=".IndoorsApplication"
@@ -37,13 +39,27 @@
             android:name=".ui.page.setting.SettingActivity"
             android:label="@string/settings"
             android:theme="@style/AppTheme.ActionBar" />
-        <activity
-            android:name=".ui.page.locate.LocateActivity"
-            />
+        <activity android:name=".ui.page.locate.LocateActivity" />
         <activity
             android:name=".ui.page.locate.SelectLocateActivity"
             android:theme="@style/AppTheme.FullScreen" />
-        <activity android:name=".ui.page.addroom.AddRoomActivity"></activity>
+        <activity android:name=".ui.page.addroom.AddRoomActivity" />
+        <activity android:name=".ui.page.bluetooth.BluetoothActivity">
+
+        </activity>
+
+        <activity
+            android:name=".ui.page.bluetooth.bluetoothchat.BluetoothChatActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/Bluetooth"
+            android:configChanges="orientation|keyboardHidden">
+        </activity>
+
+        <activity
+            android:name=".ui.page.bluetooth.bluetoothchat.DeviceListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/select_device"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
     </application>
 
 </manifest>

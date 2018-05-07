@@ -112,9 +112,9 @@ class IndoorsRepository @Inject constructor(
     return mutableLiveData
   }
 
-  override fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition): LiveData<Result<RoomPosition, Throwable>> {
+  override fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition,k : Int): LiveData<Result<RoomPosition, Throwable>> {
     val mutableLiveData = MutableLiveData<Result<RoomPosition, Throwable>>()
-    val disposable = remoteDataSource.fetchLocation(roomId, needComputePosition)
+    val disposable = remoteDataSource.fetchLocation(roomId, needComputePosition,k)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
           mutableLiveData.value = Result.of(it)

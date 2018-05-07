@@ -177,8 +177,6 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
         }
       }
 
-
-
       logd("Touched Room Position:(${(x - left) / currentBounds.width() * roomWidth}, ${(y - top) / currentBounds.height() * roomHeight})")
       onPickPositionListener?.invoke((x - left) / currentBounds.width() * roomWidth, (y - top) / currentBounds.height() * roomHeight)
     }

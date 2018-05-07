@@ -17,11 +17,10 @@ import com.xiaopo.flying.awifi.WiFiNetwork
 import com.xiaopo.flying.whenindoors.R
 import com.xiaopo.flying.whenindoors.RoomViewModel
 import com.xiaopo.flying.whenindoors.kits.toast
-import com.xiaopo.flying.whenindoors.model.NeedComputePosition
-import com.xiaopo.flying.whenindoors.model.Room
-import com.xiaopo.flying.whenindoors.model.WiFiInfo
+import com.xiaopo.flying.whenindoors.model.*
 import com.xiaopo.flying.whenindoors.ui.page.addroom.AddRoomActivity
 import com.xiaopo.flying.whenindoors.ui.page.roomdetail.RoomDetailActivity
+import com.xiaopo.flying.whenindoors.ui.widget.TwoWaySeekBar
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.PermissionNo
 import com.yanzhenjie.permission.PermissionYes
@@ -36,6 +35,7 @@ class LocateActivity : AppCompatActivity() {
   private lateinit var roomViewModel: RoomViewModel
   private lateinit var locateHandler: LocateHandler
   private var start = false
+  private var k = 4
 
   companion object {
     const val PERMISSION_CODE = 3421
@@ -64,6 +64,11 @@ class LocateActivity : AppCompatActivity() {
   private fun initView() {
     toolbar.setNavigationOnClickListener { onBackPressed() }
     toolbar.inflateMenu(R.menu.menu_locate)
+    seekbar.mode = TwoWaySeekBar.MODE_INT
+    seekbar.onIntSeekChangeListener = {
+      k = it
+      tv_debug_info.text = "k = $k"
+    }
   }
 
   private fun showRoomDetail() {
@@ -160,12 +165,14 @@ class LocateActivity : AppCompatActivity() {
   }
 
   private fun locate(needComputePosition: NeedComputePosition) {
-    roomViewModel.fetchLocation(room.id, needComputePosition)
+    roomViewModel.fetchLocation(room.id, needComputePosition, k)
         .observe(this, Observer { result ->
           result?.fold(
               success = {
-                tv_debug_info.text = "(${it.x}, ${it.y})"
-                indoors_image.currentPosition = it
+                val areaPosition = determineAreaPosition(it);
+                indoors_image.currentPosition = areaPosition
+                tv_debug_info.text = "(${it.x}, ${it.y})\n" +
+                    "(${areaPosition.x}, ${areaPosition.y})"
                 locateHandler.startLocate()
               },
               failure = {
@@ -175,6 +182,18 @@ class LocateActivity : AppCompatActivity() {
               }
           )
         })
+  }
+
+  private fun determineAreaPosition(position: RoomPosition): RoomPosition {
+    val rowWidth = 10.0
+    val row = position.x.toInt() / rowWidth.toInt()
+    val columnHeight = 10.0
+    val column = position.y.toInt() / columnHeight.toInt()
+
+    return RoomPosition(
+        row * rowWidth + rowWidth / 2,
+        column * columnHeight + columnHeight / 2
+    )
   }
 
   private fun switchIcon() {

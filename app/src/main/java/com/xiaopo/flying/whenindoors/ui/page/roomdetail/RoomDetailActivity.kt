@@ -19,6 +19,7 @@ import com.xiaopo.flying.whenindoors.kits.screenWidth
 import com.xiaopo.flying.whenindoors.kits.toast
 import com.xiaopo.flying.whenindoors.model.Room
 import com.xiaopo.flying.whenindoors.model.RoomPosition
+import com.xiaopo.flying.whenindoors.ui.page.bluetooth.bluetoothchat.BluetoothChatActivity
 import com.xiaopo.flying.whenindoors.ui.page.locate.LocateActivity
 import kotlinx.android.synthetic.main.activity_room_detail.*
 import kotlinx.android.synthetic.main.content_room_detail.*
@@ -54,6 +55,7 @@ class RoomDetailActivity : AppCompatActivity() {
     toolbar.setOnMenuItemClickListener {
       when (it.itemId) {
         R.id.action_clear -> clearFingerprint()
+        R.id.action_bluetooth -> jumpToBluetooth()
       }
 
       return@setOnMenuItemClickListener true
@@ -81,6 +83,12 @@ class RoomDetailActivity : AppCompatActivity() {
       intent.putExtra("room", room)
       startActivityForResult(intent, REQUEST_CODE)
     }
+  }
+
+  private fun jumpToBluetooth() {
+    val intent = Intent(this, BluetoothChatActivity::class.java)
+    intent.putExtra("room_id", room?.id ?: "")
+    startActivity(intent)
   }
 
   private fun clearFingerprint() {

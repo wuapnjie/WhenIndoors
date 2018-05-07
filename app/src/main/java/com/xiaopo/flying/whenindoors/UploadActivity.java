@@ -111,11 +111,6 @@ public class UploadActivity extends AppCompatActivity {
 
     disposable = AWifi.from(getApplicationContext())
         .subscribe(scanResults -> {
-
-        });
-
-    disposable = AWifi.from(getApplicationContext(), count)
-        .subscribe(scanResults -> {
               wifiInfos.clear();
               for (ScanResult scanResult : scanResults) {
                 WiFiNetwork wiFiNetwork = WiFiNetwork.from(scanResult);

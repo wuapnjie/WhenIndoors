@@ -22,5 +22,5 @@ interface Repository {
 
   fun createRoom(room: Room): LiveData<Result<Room, Throwable>>
 
-  fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition): LiveData<Result<RoomPosition, Throwable>>
+  fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition, k : Int): LiveData<Result<RoomPosition, Throwable>>
 }

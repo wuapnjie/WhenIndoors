@@ -20,5 +20,5 @@ interface IndoorsDataSource {
 
   fun createRoom(room: Room): Observable<Room>
 
-  fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition): Observable<RoomPosition>
+  fun fetchLocation(roomId: String, needComputePosition: NeedComputePosition, k: Int): Observable<RoomPosition>
 }
