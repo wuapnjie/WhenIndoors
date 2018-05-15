@@ -152,6 +152,8 @@ class LocateActivity : AppCompatActivity() {
     }
 
     override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
+      indoors_image.gridRow = 18
+      indoors_image.gridColumn = 12
       indoors_image.setImageBitmap(bitmap)
       placeWifiFingerprintMarks()
     }
@@ -164,6 +166,8 @@ class LocateActivity : AppCompatActivity() {
         .into(picassoTarget)
   }
 
+  var index = 0
+
   private fun locate(needComputePosition: NeedComputePosition) {
     roomViewModel.fetchLocation(room.id, needComputePosition, k)
         .observe(this, Observer { result ->
@@ -171,8 +175,8 @@ class LocateActivity : AppCompatActivity() {
               success = {
                 val areaPosition = determineAreaPosition(it);
                 indoors_image.currentPosition = areaPosition
-                tv_debug_info.text = "(${it.x}, ${it.y})\n" +
-                    "(${areaPosition.x}, ${areaPosition.y})"
+                index ++;
+                tv_debug_info.text = "(${areaPosition.x}, ${areaPosition.y})\n"
                 locateHandler.startLocate()
               },
               failure = {
@@ -185,9 +189,9 @@ class LocateActivity : AppCompatActivity() {
   }
 
   private fun determineAreaPosition(position: RoomPosition): RoomPosition {
-    val rowWidth = 10.0
+    val rowWidth = 3.0
     val row = position.x.toInt() / rowWidth.toInt()
-    val columnHeight = 10.0
+    val columnHeight = 3.0
     val column = position.y.toInt() / columnHeight.toInt()
 
     return RoomPosition(
@@ -219,9 +223,9 @@ class LocateActivity : AppCompatActivity() {
   }
 
   private fun placeWifiFingerprintMarks() {
-    indoors_image.currentMarkDrawable = resources.getDrawable(R.drawable.ic_current_mark_red_500_18dp)
+    indoors_image.currentMarkDrawable = resources.getDrawable(R.drawable.red_circle)
     indoors_image.needDrawCurrentMark = true
-    indoors_image.markDrawable = resources.getDrawable(R.drawable.ic_wifi_mark_18dp);
+    indoors_image.markDrawable = resources.getDrawable(R.drawable.circle);
     room.positions.let {
       indoors_image.markPositions = ArrayList(it)
     }

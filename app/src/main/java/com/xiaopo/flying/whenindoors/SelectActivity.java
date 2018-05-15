@@ -98,7 +98,7 @@ public class SelectActivity extends AppCompatActivity implements OnItemSelectedL
               }
 
 
-              toolbar.setTitle("请选择要上传的WiFi");
+              toolbar.setTitle("请选择不要上传的WiFi");
 
               items.clear();
               items.addAll(wifiNetworks);
@@ -129,10 +129,10 @@ public class SelectActivity extends AppCompatActivity implements OnItemSelectedL
       return;
     }
 
-    if (selectedSize < 2) {
-      Toast.makeText(this, "你必须选择2个Wifi以上", Toast.LENGTH_SHORT).show();
-      return;
-    }
+//    if (selectedSize < 2) {
+//      Toast.makeText(this, "你必须选择2个Wifi以上", Toast.LENGTH_SHORT).show();
+//      return;
+//    }
 
     ArrayList<String> bssidFilters = new ArrayList<>(selectedSize);
     for (Integer selectedPosition : selectedPositions) {

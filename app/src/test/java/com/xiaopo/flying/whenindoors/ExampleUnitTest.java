@@ -1,5 +1,7 @@
 package com.xiaopo.flying.whenindoors;
 
+import com.xiaopo.flying.awifi.AWifi;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -63,15 +63,16 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
       postInvalidate()
     }
 
-  private var currentMark: Mark? = null
+  private val markPaths = arrayListOf<Mark>()
   var currentPosition: RoomPosition? = null
     set(value) {
       value?.let {
-        val markLength = markDrawable?.intrinsicWidth ?: 0
-        currentMark = Mark(it, dWidth.toDouble() / roomWidth * it.x, dHeight.toDouble() / roomHeight * it.y).apply {
+        var markLength = markDrawable?.intrinsicWidth ?: 0
+        markLength = if (markLength <= 0) 10 else markLength
+        val currentMark = Mark(it, dWidth.toDouble() / roomWidth * it.x, dHeight.toDouble() / roomHeight * it.y).apply {
           bounds.set((x - markLength / 2).toInt(), (y - markLength / 2).toInt(), (x + markLength / 2).toInt(), (y + markLength / 2).toInt())
         }
-
+        markPaths.add(currentMark)
         postInvalidate()
       }
     }
@@ -80,7 +81,8 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
     marks.clear()
     markPositions.forEach {
       val mark = Mark(it, dWidth.toDouble() / roomWidth * it.x, dHeight.toDouble() / roomHeight * it.y)
-      val markLength = markDrawable?.intrinsicWidth ?: 0
+      var markLength = markDrawable?.intrinsicWidth ?: 0
+      markLength = if (markLength <= 0) 10 else markLength
       mark.bounds
           .set((mark.x - markLength / 2).toInt(), (mark.y - markLength / 2).toInt(), (mark.x + markLength / 2).toInt(), (mark.y + markLength / 2).toInt())
 //      mark.bounds.offset(-markLength / 2, -markLength / 2)
@@ -178,7 +180,7 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
       }
 
       logd("Touched Room Position:(${(x - left) / currentBounds.width() * roomWidth}, ${(y - top) / currentBounds.height() * roomHeight})")
-      onPickPositionListener?.invoke((x - left) / currentBounds.width() * roomWidth, (y - top) / currentBounds.height() * roomHeight)
+      onPickPositionListener?.invoke((x - left) / currentBounds.width() * roomWidth, - (y - top) / currentBounds.height() * roomHeight + roomHeight)
     }
 
     gestureKiller.onDoubleTapListener = { x, y ->
@@ -298,19 +300,29 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
     marks.forEach {
       val count = canvas.save()
       canvas.concat(controlMatrix)
+      canvas.scale(1f,-1f,dWidth.toFloat() / 2, dHeight.toFloat() /2)
       markDrawable?.bounds = it.bounds
       markDrawable?.draw(canvas)
       canvas.restoreToCount(count)
     }
   }
 
+  private val pathMarkCache = hashSetOf<String>()
+
   private fun drawCurrentMark(canvas: Canvas) {
-    currentMark?.let {
-      val count = canvas.save()
-      canvas.concat(controlMatrix)
-      currentMarkDrawable?.bounds = it.bounds
-      currentMarkDrawable?.draw(canvas)
-      canvas.restoreToCount(count)
+    pathMarkCache.clear()
+    markPaths.forEach {
+      val key = it.roomPosition.toString()
+      if (!pathMarkCache.contains(key)){
+        val count = canvas.save()
+        canvas.concat(controlMatrix)
+        canvas.scale(1f,-1f,dWidth.toFloat() / 2, dHeight.toFloat() /2)
+        currentMarkDrawable?.bounds = it.bounds
+        currentMarkDrawable?.draw(canvas)
+        canvas.restoreToCount(count)
+
+        pathMarkCache.add(key)
+      }
     }
   }
 
@@ -325,7 +337,7 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
     init {
       paint.color = Color.BLUE
       paint.style = Paint.Style.STROKE
-      paint.strokeWidth = 1.dp.toFloat()
+      paint.strokeWidth = 2.dp.toFloat()
     }
 
     fun draw(canvas: Canvas) {
@@ -337,9 +349,11 @@ class IndoorsImageView @JvmOverloads constructor(context: Context,
 
       for (i in 1 until row) {
         canvas.drawLine(0f, rowHeight * i, width, rowHeight * i, paint)
-        canvas.drawLine(columnWidth * i, 0f, columnWidth * i, height, paint)
       }
 
+      for (i in 1 until column) {
+        canvas.drawLine(columnWidth * i, 0f, columnWidth * i, height, paint)
+      }
     }
 
   }

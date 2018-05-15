@@ -136,7 +136,7 @@ class RoomDetailActivity : AppCompatActivity() {
                 .fit()
                 .centerCrop()
                 .into(room_image)
-            room_image.setOnClickListener { toLocatePosition() }
+//            room_image.setOnClickListener { toLocatePosition() }
 
             fingerprints.clear()
             room.positions.let {

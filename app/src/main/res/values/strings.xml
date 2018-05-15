@@ -59,5 +59,6 @@
     <string name="secure_connect">Connect a device - Secure</string>
     <string name="insecure_connect">Connect a device - Insecure</string>
     <string name="discoverable">Make discoverable</string>
+    <string name="scan_and_upload">开始采集</string>
 
 </resources>

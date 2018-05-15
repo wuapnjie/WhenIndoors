@@ -1,5 +1,6 @@
 package com.xiaopo.flying.whenindoors.ui.page.room
 
+import android.Manifest
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -8,12 +9,18 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.xiaopo.flying.whenindoors.R
 import com.xiaopo.flying.whenindoors.RoomViewModel
 import com.xiaopo.flying.whenindoors.kits.AnotherAdapter
 import com.xiaopo.flying.whenindoors.kits.LinearDividerDecoration
 import com.xiaopo.flying.whenindoors.kits.toast
 import com.xiaopo.flying.whenindoors.model.RoomInfo
+import com.xiaopo.flying.whenindoors.ui.page.addroom.AddRoomActivity
+import com.xiaopo.flying.whenindoors.ui.page.locate.LocateActivity
+import com.yanzhenjie.permission.AndPermission
+import com.yanzhenjie.permission.PermissionNo
+import com.yanzhenjie.permission.PermissionYes
 import kotlinx.android.synthetic.main.fragment_room.*
 
 /**
@@ -31,6 +38,21 @@ class RoomFragment : Fragment() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     initViewModel()
+
+    AndPermission.with(this)
+        .permission(Manifest.permission.ACCESS_WIFI_STATE,Manifest.permission.ACCESS_COARSE_LOCATION)
+        .requestCode(AddRoomActivity.PERMISSION_CODE)
+        .callback(this)
+        .start()
+  }
+
+  @PermissionYes(LocateActivity.PERMISSION_CODE)
+  private fun getPermissionYes(grantedPermissions: List<String>) {
+  }
+
+  @PermissionNo(LocateActivity.PERMISSION_CODE)
+  private fun getPermissionNo(deniedPermissions: List<String>) {
+    Toast.makeText(context, "必须要权限呀", Toast.LENGTH_SHORT).show()
   }
 
   private fun initViewModel() {

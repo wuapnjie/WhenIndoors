@@ -21,6 +21,52 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+    <TextView
+        android:gravity="center"
+        android:id="@+id/tv_log"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_position_x"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="x:"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_position_y"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="y:"
+                android:inputType="numberDecimal"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +83,7 @@
             android:paddingRight="16dp"
             android:text="@string/pick_position" />
 
-        <TextView
+        <EditText
             android:id="@+id/tv_picked_position"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -56,12 +102,12 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="bottom"
-        android:text="@string/scan" />
+        android:text="@string/scan_and_upload" />
 
-    <Button
-        android:id="@+id/btn_upload"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom"
-        android:text="@string/upload" />
+    <!--<Button-->
+    <!--android:id="@+id/btn_upload"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:layout_gravity="bottom"-->
+    <!--android:text="@string/upload" />-->
 </LinearLayout>

@@ -162,7 +162,7 @@ public class BluetoothChatFragment extends Fragment {
       return;
     }
 
-    Log.d(TAG, "START SCAN WIFI");
+    Log.d(TAG, "开始扫描WiFi");
     Disposable disposable = AWifi.from(getContext())
         .subscribe(scanResults -> {
           List<WiFiInfo> wiFiInfos = new ArrayList<>(scanResults.size());
@@ -172,19 +172,19 @@ public class BluetoothChatFragment extends Fragment {
           }
 
           final WifiData wifiData = new WifiData(position.getX(), position.getY(), wiFiInfos);
-          uplaodWifiFingerprint(wifiData);
+          uploadWifiFingerprint(wifiData);
         });
 
     compositeDisposable.add(disposable);
   }
 
-  private void uplaodWifiFingerprint(WifiData wifiData) {
+  private void uploadWifiFingerprint(WifiData wifiData) {
     if (currentPosition.getX() != wifiData.getX() || currentPosition.getY() != wifiData.getY()){
-      Log.d(TAG, "position changed, drop data");
+      Log.d(TAG, "位置改变，丢弃数据");
       return;
     }
 
-    Log.d(TAG, "UPLOAD WIFI FINGERPRINT");
+    Log.d(TAG, "上传WiFi指纹");
     roomViewModel.uploadWifi(roomId, wifiData)
         .observe(this, result -> {
           if (result != null) {
@@ -196,7 +196,10 @@ public class BluetoothChatFragment extends Fragment {
                     Log.d(TAG, "上传失败" + "(" + wifiData.getX() + "," + wifiData.getY() + ")");
                   }
 
-                  scanWifiFingerprint(currentPosition);
+                  // 蓝牙仍然连接时继续扫描上传
+                  if (chatService != null && chatService.getState() == BluetoothChatService.STATE_CONNECTED) {
+                    scanWifiFingerprint(currentPosition);
+                  }
 
                   return null;
                 },

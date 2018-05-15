@@ -1,5 +1,6 @@
 package com.xiaopo.flying.whenindoors.ui.page.room
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import com.xiaopo.flying.whenindoors.R
 import com.xiaopo.flying.whenindoors.kits.AnotherBinder
 import com.xiaopo.flying.whenindoors.kits.AnotherViewHolder
 import com.xiaopo.flying.whenindoors.model.RoomInfo
+import com.xiaopo.flying.whenindoors.ui.page.bluetooth.bluetoothchat.BluetoothChatActivity
 import com.xiaopo.flying.whenindoors.ui.page.locate.LocateActivity
 import kotlinx.android.synthetic.main.item_room.view.*
 
@@ -28,6 +30,7 @@ class RoomItemViewBinder : AnotherBinder<RoomInfo>() {
       val intent = Intent(it.context, LocateActivity::class.java)
       intent.putExtra("room_id", item.id)
       it.context.startActivity(intent)
+//      jumpToBluetooth(it.context,item.id)
     }
 
     Picasso.with(itemView.context)
@@ -36,4 +39,9 @@ class RoomItemViewBinder : AnotherBinder<RoomInfo>() {
         .into(itemView.iv_room)
   }
 
+  private fun jumpToBluetooth(context: Context, roomId : String) {
+    val intent = Intent(context, BluetoothChatActivity::class.java)
+    intent.putExtra("room_id", roomId)
+    context.startActivity(intent)
+  }
 }

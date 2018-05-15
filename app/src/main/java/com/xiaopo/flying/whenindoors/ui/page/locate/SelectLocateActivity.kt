@@ -11,7 +11,7 @@ import com.squareup.picasso.Target
 import com.xiaopo.flying.whenindoors.R
 import com.xiaopo.flying.whenindoors.kits.toast
 import com.xiaopo.flying.whenindoors.model.Room
-import kotlinx.android.synthetic.main.activity_locate.*
+import kotlinx.android.synthetic.main.activity_select_locate.*
 
 class SelectLocateActivity : AppCompatActivity() {
 
@@ -37,6 +37,8 @@ class SelectLocateActivity : AppCompatActivity() {
     }
 
     override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
+      indoors_image.gridRow = 18
+      indoors_image.gridColumn = 12
       indoors_image.setImageBitmap(bitmap)
       placeWifiFingerprintMarks()
     }
@@ -47,9 +49,7 @@ class SelectLocateActivity : AppCompatActivity() {
     Picasso.with(this)
         .load(room.imageUrl)
         .into(picassoTarget)
-    indoors_image.needDrawGrid = true
-    indoors_image.gridColumn = 25
-    indoors_image.gridRow = 25
+    indoors_image.needDrawGrid = false
     indoors_image.onPickPositionListener = { pickedRoomX: Double, pickedRoomY: Double ->
       val data = Intent()
       data.putExtra("pickedX", pickedRoomX)
@@ -60,7 +60,8 @@ class SelectLocateActivity : AppCompatActivity() {
   }
 
   private fun placeWifiFingerprintMarks() {
-    indoors_image.markDrawable = resources.getDrawable(R.drawable.ic_wifi_mark_18dp);
+    indoors_image.needDrawMark = true
+    indoors_image.markDrawable = resources.getDrawable(R.drawable.circle);
     room.positions.let {
       indoors_image.markPositions = ArrayList(it)
     }
